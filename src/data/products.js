@@ -1,0 +1,53 @@
+﻿export const products = [
+  {
+    id: "tee-ocean",
+    name: "Ocean Tee",
+    category: "T-Shirts",
+    price: 18.0,
+    colors: ["#09637E", "#088395", "#111827"],
+    sizes: ["S", "M", "L", "XL"],
+    images: ["/placeholders/tee.svg"],
+    description: "Soft everyday tee with a clean fit. Breathable fabric for daily wear.",
+    featured: true,
+    isNew: true,
+  },
+  {
+    id: "hoodie-mist",
+    name: "Mist Hoodie",
+    category: "Hoodies",
+    price: 42.0,
+    colors: ["#7AB2B2", "#09637E", "#0f172a"],
+    sizes: ["M", "L", "XL"],
+    images: ["/placeholders/hoodie.svg"],
+    description: "Cozy hoodie with a structured hood and premium feel. Great for breezy days.",
+    featured: true,
+    isNew: false,
+  },
+  {
+    id: "pants-street",
+    name: "Street Pants",
+    category: "Pants",
+    price: 36.0,
+    colors: ["#111827", "#088395"],
+    sizes: ["S", "M", "L"],
+    images: ["/placeholders/pants.svg"],
+    description: "Comfort-fit pants designed for movement. Clean look, easy to style.",
+    featured: false,
+    isNew: true,
+  },
+  {
+    id: "cap-wave",
+    name: "Wave Cap",
+    category: "Accessories",
+    price: 14.0,
+    colors: ["#09637E", "#7AB2B2"],
+    sizes: ["One Size"],
+    images: ["/placeholders/cap.svg"],
+    description: "Minimal cap with adjustable strap. Lightweight and durable.",
+    featured: false,
+    isNew: false,
+  },
+];
+
+export const categories = ["All", "T-Shirts", "Hoodies", "Pants", "Accessories"];
+export const sizes = ["All", "S", "M", "L", "XL", "One Size"];
