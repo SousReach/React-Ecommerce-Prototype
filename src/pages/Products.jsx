@@ -211,7 +211,7 @@ export default function Products() {
             onClick={() => setMobileFiltersOpen(false)}
           />
           <div className="absolute right-0 top-0 h-full w-full max-w-sm bg-white shadow-soft p-5 overflow-auto">
-            <FiltersPanel compact />
+            
           </div>
         </div>
       )}
@@ -219,7 +219,7 @@ export default function Products() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Desktop sidebar */}
         <div className="hidden lg:block">
-          <FiltersPanel />
+          
         </div>
 
         <section className="flex-1">
