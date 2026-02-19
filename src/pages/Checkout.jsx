@@ -35,12 +35,14 @@ export default function Checkout() {
 
   const canCheckout = useMemo(() => items.length > 0, [items.length]);
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!canCheckout) {
       toast.error("Your cart is empty");
       return;
     }
 
+    // Brief delay so the user sees "Placing order..." feedback
+    await new Promise((r) => setTimeout(r, 600));
     // Frontend-only demo “place order”
     clear();
     toast.success("Order placed (demo)");

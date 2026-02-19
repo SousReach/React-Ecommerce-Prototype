@@ -68,9 +68,8 @@ export default function ProductDetail() {
                 <button
                   key={src}
                   onClick={() => setImgIdx(i)}
-                  className={`h-20 w-16 overflow-hidden rounded-xl border ${
-                    i === imgIdx ? "border-brand-900" : "border-slate-200"
-                  }`}
+                  className={`h-20 w-16 overflow-hidden rounded-xl border ${i === imgIdx ? "border-brand-900" : "border-slate-200"
+                    }`}
                   title={`Image ${i + 1}`}
                 >
                   <SafeImage className="h-full w-full object-cover" src={src} alt="" />
@@ -112,11 +111,10 @@ export default function ProductDetail() {
                     <button
                       key={c}
                       onClick={() => setColor(c)}
-                      className={`h-9 w-9 rounded-full border ${
-                        c === color
+                      className={`h-9 w-9 rounded-full border ${c === color
                           ? "border-brand-900 ring-2 ring-brand-300"
                           : "border-slate-200"
-                      }`}
+                        }`}
                       style={{ backgroundColor: c }}
                       title={c}
                     />
@@ -142,7 +140,7 @@ export default function ProductDetail() {
       </div>
 
       {/* ✅ Sticky Add-to-Cart bar (mobile only) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-slate-100">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-t border-slate-100 dark:border-slate-800">
         <div className="container-pad py-3 flex items-center gap-3">
           <div className="flex-1 min-w-0">
             <div className="text-sm font-semibold text-slate-900 truncate">{product.name}</div>

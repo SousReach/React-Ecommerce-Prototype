@@ -104,7 +104,7 @@ export default function Cart() {
                       max="99"
                       className="input w-24"
                       value={i.qty}
-                      onChange={(e) => setQty(i.key, e.target.value)}
+                      onChange={(e) => setQty(i.key, Number(e.target.value))}
                     />
                   </div>
 

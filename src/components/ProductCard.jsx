@@ -11,17 +11,18 @@ function Badge({ children, tone = "default" }) {
     tone === "new"
       ? "bg-brand-900 text-white"
       : tone === "featured"
-      ? "bg-brand-50 text-brand-900 border border-brand-300 dark:bg-slate-900 dark:text-brand-300 dark:border-slate-700"
-      : "bg-white text-slate-700 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700";
+        ? "bg-brand-50 text-brand-900 border border-brand-300 dark:bg-slate-900 dark:text-brand-300 dark:border-slate-700"
+        : "bg-white text-slate-700 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700";
 
   return <span className={`badge ${cls}`}>{children}</span>;
 }
 
-function IconBtn({ onClick, title, children }) {
+function IconBtn({ onClick, title, children, ariaLabel }) {
   return (
     <button
       onClick={onClick}
       title={title}
+      aria-label={ariaLabel || title}
       className="
         h-10 w-10 rounded-xl inline-flex items-center justify-center transition
         bg-white/90 border border-slate-200 hover:bg-white
@@ -79,11 +80,10 @@ export default function ProductCard({ product }) {
             title={isWished ? "Remove from wishlist" : "Save to wishlist"}
           >
             <Heart
-              className={`h-5 w-5 ${
-                isWished
+              className={`h-5 w-5 ${isWished
                   ? "fill-brand-900 text-brand-900 dark:fill-brand-300 dark:text-brand-300"
                   : "text-slate-700 dark:text-slate-200"
-              }`}
+                }`}
             />
           </IconBtn>
 

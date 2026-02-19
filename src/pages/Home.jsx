@@ -25,12 +25,11 @@ export default function Home() {
               </span>
 
               <h1 className="mt-4 text-4xl font-extrabold tracking-tight">
-                Individual Project M2Y4-S2-Lab 7
+                Reach Clothing Store
               </h1>
 
               <p className="mt-4 leading-relaxed text-slate-600">
-                An individual assignment project for semester 2. This project include feature such as,  Browse products,
-                filter by size/category, add to cart, wishlist, and checkout with validated forms.
+                Reach for style, comfort, and confidence — all in one place. Premium everyday essentials designed to move with you.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">

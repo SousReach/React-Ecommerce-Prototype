@@ -36,7 +36,7 @@ export default function Products() {
   const [q, setQ] = useState(qParam);
   const [category, setCategory] = useState(categoryParam);
   const [size, setSize] = useState(sizeParam);
-  const [maxPrice, setMaxPrice] = useState(Number.isFinite(maxPriceParam) ? maxPriceParam : 999);
+  const [maxPrice, setMaxPrice] = useState(Number.isFinite(maxPriceParam) ? maxPriceParam : 100);
   const [sort, setSort] = useState(sortParam);
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -58,7 +58,7 @@ export default function Products() {
     if (q.trim()) next.set("q", q.trim());
     if (category !== "All") next.set("category", category);
     if (size !== "All") next.set("size", size);
-    if (maxPrice !== 999) next.set("maxPrice", String(maxPrice));
+    if (maxPrice !== 100) next.set("maxPrice", String(maxPrice));
     if (sort !== "relevance") next.set("sort", sort);
     setSearchParams(next);
   }
@@ -67,7 +67,7 @@ export default function Products() {
     setQ("");
     setCategory("All");
     setSize("All");
-    setMaxPrice(999);
+    setMaxPrice(100);
     setSort("relevance");
     setSearchParams(new URLSearchParams());
   }
@@ -77,24 +77,29 @@ export default function Products() {
     if (q.trim()) list.push({ key: "q", label: `Search: "${q.trim()}"` });
     if (category !== "All") list.push({ key: "category", label: `Category: ${category}` });
     if (size !== "All") list.push({ key: "size", label: `Size: ${size}` });
-    if (maxPrice !== 999) list.push({ key: "maxPrice", label: `Max: $${maxPrice}` });
+    if (maxPrice !== 100) list.push({ key: "maxPrice", label: `Max: $${maxPrice}` });
     if (sort !== "relevance") {
       const pretty =
         sort === "price_asc" ? "Price: Low → High" :
-        sort === "price_desc" ? "Price: High → Low" :
-        sort === "name_asc" ? "Name: A → Z" :
-        "Relevance";
+          sort === "price_desc" ? "Price: High → Low" :
+            sort === "name_asc" ? "Name: A → Z" :
+              "Relevance";
       list.push({ key: "sort", label: `Sort: ${pretty}` });
     }
     return list;
   }, [q, category, size, maxPrice, sort]);
 
   function removeChip(key) {
-    if (key === "q") setQ("");
-    if (key === "category") setCategory("All");
-    if (key === "size") setSize("All");
-    if (key === "maxPrice") setMaxPrice(999);
-    if (key === "sort") setSort("relevance");
+    const updates = {
+      q: () => setQ(""),
+      category: () => setCategory("All"),
+      size: () => setSize("All"),
+      maxPrice: () => setMaxPrice(100),
+      sort: () => setSort("relevance"),
+    };
+    updates[key]?.();
+    // Sync URL on next tick after state updates
+    setTimeout(() => applyFilters(), 0);
   }
 
   function FiltersPanel({ compact = false }) {
@@ -157,6 +162,7 @@ export default function Products() {
             type="range"
             min="10"
             max="100"
+            aria-label="Maximum price"
             step="1"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
@@ -210,8 +216,8 @@ export default function Products() {
             className="absolute inset-0 bg-black/40"
             onClick={() => setMobileFiltersOpen(false)}
           />
-          <div className="absolute right-0 top-0 h-full w-full max-w-sm bg-white shadow-soft p-5 overflow-auto">
-            
+          <div className="absolute right-0 top-0 h-full w-full max-w-sm bg-white dark:bg-slate-900 shadow-soft p-5 overflow-auto">
+            <FiltersPanel compact />
           </div>
         </div>
       )}
@@ -219,7 +225,7 @@ export default function Products() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Desktop sidebar */}
         <div className="hidden lg:block">
-          
+          <FiltersPanel />
         </div>
 
         <section className="flex-1">
