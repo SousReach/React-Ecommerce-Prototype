@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
     e.stopPropagation();
 
     const size = product.sizes?.[0] ?? "M";
-    const color = product.colors?.[0] ?? "#09637E";
+    const color = product.colors?.[0] ?? "#EB4C4C";
 
     addItem(product, { size, color });
     toast.success("Added to cart");
@@ -81,8 +81,8 @@ export default function ProductCard({ product }) {
           >
             <Heart
               className={`h-5 w-5 ${isWished
-                  ? "fill-brand-900 text-brand-900 dark:fill-brand-300 dark:text-brand-300"
-                  : "text-slate-700 dark:text-slate-200"
+                ? "fill-brand-900 text-brand-900 dark:fill-brand-300 dark:text-brand-300"
+                : "text-slate-700 dark:text-slate-200"
                 }`}
             />
           </IconBtn>

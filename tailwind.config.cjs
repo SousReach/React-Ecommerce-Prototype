@@ -6,10 +6,10 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          900: "#09637E",
-          800: "#088395",
-          300: "#7AB2B2",
-          50:  "#EBF4F6",
+          900: "#EB4C4C",   // Primary red
+          800: "#FF7070",   // Hover coral
+          300: "#FFA6A6",   // Soft pink accent
+          50: "#FFEDC7",   // Cream background
         },
       },
       boxShadow: {

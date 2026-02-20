@@ -6,11 +6,11 @@
           <div>
             <div className="font-semibold text-slate-900">Suos Store</div>
             <div className="text-sm text-slate-500">
-              Frontend-only ecommerce UI (no backend yet).
+              Frontend-only ecommerce UI
             </div>
           </div>
           <div className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Suos Store. All rights reserved.
+            © {new Date().getFullYear()} Suos Reach. All rights reserved.
           </div>
         </div>
       </div>

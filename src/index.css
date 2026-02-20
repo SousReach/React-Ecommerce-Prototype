@@ -15,13 +15,13 @@
     @apply bg-brand-50 text-slate-900 antialiased;
   }
 
-  /* Brandier dark background (no harsh pure-black) */
+  /* Dark background with warm red/orange tones */
   html.dark body {
     background:
-      radial-gradient(1200px circle at 18% 10%, rgba(8, 131, 149, 0.28), transparent 55%),
-      radial-gradient(900px circle at 78% 18%, rgba(122, 178, 178, 0.18), transparent 55%),
-      radial-gradient(900px circle at 50% 85%, rgba(9, 99, 126, 0.12), transparent 60%),
-      rgb(2, 6, 23); /* slate-950 */
+      radial-gradient(1200px circle at 18% 10%, rgba(195, 17, 12, 0.22), transparent 55%),
+      radial-gradient(900px circle at 78% 18%, rgba(230, 80, 27, 0.15), transparent 55%),
+      radial-gradient(900px circle at 50% 85%, rgba(116, 10, 3, 0.12), transparent 60%),
+      #280905;
     color: rgb(241, 245, 249); /* slate-100 */
   }
 

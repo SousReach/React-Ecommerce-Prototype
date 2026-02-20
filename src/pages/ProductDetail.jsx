@@ -21,7 +21,7 @@ export default function ProductDetail() {
 
   const [imgIdx, setImgIdx] = useState(0);
   const [size, setSize] = useState(product?.sizes?.[0] ?? "M");
-  const [color, setColor] = useState(product?.colors?.[0] ?? "#09637E");
+  const [color, setColor] = useState(product?.colors?.[0] ?? "#EB4C4C");
 
   useEffect(() => {
     if (product?.id) recordView(product.id);
@@ -112,8 +112,8 @@ export default function ProductDetail() {
                       key={c}
                       onClick={() => setColor(c)}
                       className={`h-9 w-9 rounded-full border ${c === color
-                          ? "border-brand-900 ring-2 ring-brand-300"
-                          : "border-slate-200"
+                        ? "border-brand-900 ring-2 ring-brand-300"
+                        : "border-slate-200"
                         }`}
                       style={{ backgroundColor: c }}
                       title={c}

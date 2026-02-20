@@ -17,12 +17,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             borderRadius: "14px",
             padding: "12px 14px",
             fontWeight: 600,
-            background: "#09637E",
+            background: "#EB4C4C",
             color: "#ffffff",
           },
           success: {
             style: {
-              background: "#09637E",
+              background: "#EB4C4C",
               color: "#ffffff",
             },
           },
