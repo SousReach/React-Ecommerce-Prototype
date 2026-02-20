@@ -12,7 +12,14 @@
   }
 
   body {
-    @apply bg-brand-50 text-slate-900 antialiased;
+    @apply bg-brand-50 text-slate-900 antialiased font-sub;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Alfa Slab One", serif;
   }
 
   /* Dark background with warm red/orange tones */
@@ -22,15 +29,36 @@
       radial-gradient(900px circle at 78% 18%, rgba(230, 80, 27, 0.15), transparent 55%),
       radial-gradient(900px circle at 50% 85%, rgba(116, 10, 3, 0.12), transparent 60%),
       #280905;
-    color: rgb(241, 245, 249); /* slate-100 */
+    color: rgb(241, 245, 249);
+    /* slate-100 */
   }
 
   /* Make common hard-coded text colors readable in dark mode */
-  html.dark .text-slate-900 { color: rgb(241, 245, 249) !important; } /* slate-100 */
-  html.dark .text-slate-800 { color: rgb(226, 232, 240) !important; } /* slate-200 */
-  html.dark .text-slate-700 { color: rgb(226, 232, 240) !important; } /* slate-200 */
-  html.dark .text-slate-600 { color: rgb(148, 163, 184) !important; } /* slate-400 */
-  html.dark .text-slate-500 { color: rgb(148, 163, 184) !important; } /* slate-400 */
+  html.dark .text-slate-900 {
+    color: rgb(241, 245, 249) !important;
+  }
+
+  /* slate-100 */
+  html.dark .text-slate-800 {
+    color: rgb(226, 232, 240) !important;
+  }
+
+  /* slate-200 */
+  html.dark .text-slate-700 {
+    color: rgb(226, 232, 240) !important;
+  }
+
+  /* slate-200 */
+  html.dark .text-slate-600 {
+    color: rgb(148, 163, 184) !important;
+  }
+
+  /* slate-400 */
+  html.dark .text-slate-500 {
+    color: rgb(148, 163, 184) !important;
+  }
+
+  /* slate-400 */
 }
 
 @layer components {
@@ -39,8 +67,7 @@
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-soft border border-slate-100
-    dark:bg-slate-900 dark:border-slate-800;
+    @apply bg-white rounded-xl shadow-soft border border-slate-100 dark:bg-slate-900 dark:border-slate-800;
   }
 
   .btn {
@@ -52,8 +79,7 @@
   }
 
   .btn-ghost {
-    @apply btn bg-white text-slate-900 border border-slate-200 hover:bg-slate-50
-    dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-800;
+    @apply btn bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-800;
   }
 
   .badge {
@@ -61,9 +87,6 @@
   }
 
   .input {
-    @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none
-    focus:ring-2 focus:ring-brand-300
-    placeholder:text-slate-500 placeholder:opacity-100
-    dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400;
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-brand-300 placeholder:text-slate-500 placeholder:opacity-100 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400;
   }
 }

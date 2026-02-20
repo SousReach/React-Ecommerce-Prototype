@@ -95,7 +95,7 @@ export default function ProductCard({ product }) {
 
       <div className="p-4">
         <div className="text-sm text-slate-500">{product.category}</div>
-        <div className="mt-1 font-semibold">{product.name}</div>
+        <div className="mt-1 font-semibold font-heading">{product.name}</div>
 
         <div className="mt-2 flex items-center justify-between">
           <div className="font-bold text-brand-900 dark:text-brand-300">

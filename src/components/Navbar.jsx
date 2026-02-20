@@ -33,7 +33,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <span className="inline-flex h-9 w-9 rounded-xl bg-brand-900" />
             <div className="leading-tight">
-              <div className="font-bold text-slate-900 dark:text-slate-100">Suos Store</div>
+              <div className="font-bold text-slate-900 dark:text-slate-100 font-heading">Suos Store</div>
               <div className="text-xs text-slate-500 dark:text-slate-400">Clothing</div>
             </div>
           </Link>

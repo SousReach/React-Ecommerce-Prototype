@@ -4,7 +4,7 @@
       <div className="container-pad py-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <div className="font-semibold text-slate-900">Suos Store</div>
+            <div className="font-semibold text-slate-900 font-heading">Suos Store</div>
             <div className="text-sm text-slate-500">
               Frontend-only ecommerce UI
             </div>

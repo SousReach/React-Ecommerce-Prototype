@@ -4,6 +4,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['"Alfa Slab One"', 'serif'],
+        sub: ['"Creepster"', 'cursive'],
+      },
       colors: {
         brand: {
           900: "#EB4C4C",   // Primary red
