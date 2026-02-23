@@ -90,3 +90,277 @@
     @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-brand-300 placeholder:text-slate-500 placeholder:opacity-100 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400;
   }
 }
+
+/* ===== iOS Liquid Glass System ===== */
+
+/* Floating glass navbar wrapper */
+.liquid-glass-nav {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 1200px;
+  z-index: 50;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+/* Core liquid glass panel */
+.liquid-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    /* Outer soft shadow */
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    /* Inner specular highlight — top */
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    /* Inner specular highlight — bottom edge */
+    inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Prismatic shimmer along the top edge */
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(255, 180, 180, 0.35) 25%,
+    rgba(255, 255, 255, 0.9) 45%,
+    rgba(180, 220, 255, 0.35) 65%,
+    rgba(255, 255, 255, 0.5) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Secondary subtle specular sweep */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  border-radius: 22px 22px 0 0;
+  z-index: 0;
+}
+
+/* Glass pill elements (search, buttons, toggles) */
+.liquid-glass-pill {
+  position: relative;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-glass-pill:hover {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Glass nav link styling */
+.liquid-nav-link {
+  position: relative;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(30, 41, 59, 0.85);
+}
+
+.liquid-nav-link:hover {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  color: rgba(15, 23, 42, 1);
+}
+
+.liquid-nav-link.active {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  color: #EB4C4C;
+  font-weight: 600;
+}
+
+/* Glass search input override */
+.liquid-glass-search {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  color: #1e293b !important;
+}
+
+.liquid-glass-search::placeholder {
+  color: rgba(100, 116, 139, 0.7) !important;
+}
+
+.liquid-glass-search:focus {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border-color: rgba(235, 76, 76, 0.3) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    0 0 0 3px rgba(235, 76, 76, 0.1);
+}
+
+/* Glass badge (cart/wishlist count) */
+.liquid-glass-badge {
+  background: rgba(235, 76, 76, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  box-shadow: 0 2px 6px rgba(235, 76, 76, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Spacer so page content doesn't hide behind fixed navbar */
+.liquid-glass-spacer {
+  height: 88px;
+}
+
+/* ===== Dark Mode Liquid Glass ===== */
+html.dark .liquid-glass {
+  background: rgba(15, 10, 8, 0.45);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.02);
+}
+
+html.dark .liquid-glass::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.02) 10%,
+    rgba(255, 140, 140, 0.12) 25%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(140, 180, 255, 0.12) 65%,
+    rgba(255, 255, 255, 0.05) 80%,
+    transparent 100%
+  );
+}
+
+html.dark .liquid-glass::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    transparent 100%
+  );
+}
+
+html.dark .liquid-glass-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .liquid-glass-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .liquid-nav-link {
+  color: rgba(226, 232, 240, 0.85);
+}
+
+html.dark .liquid-nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  color: rgba(241, 245, 249, 1);
+}
+
+html.dark .liquid-nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.12);
+  color: #FFA6A6;
+}
+
+html.dark .liquid-glass-search {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+  color: #e2e8f0 !important;
+}
+
+html.dark .liquid-glass-search::placeholder {
+  color: rgba(148, 163, 184, 0.6) !important;
+}
+
+html.dark .liquid-glass-search:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 166, 166, 0.2) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
+    0 0 0 3px rgba(255, 166, 166, 0.08);
+}
+
+html.dark .liquid-glass-badge {
+  background: rgba(235, 76, 76, 0.75);
+  border-color: rgba(255, 255, 255, 0.15);
+}

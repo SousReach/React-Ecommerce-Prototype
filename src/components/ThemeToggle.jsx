@@ -8,14 +8,14 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="h-10 w-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 inline-flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800"
+      className="liquid-glass-pill h-9 w-9 inline-flex items-center justify-center"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
       {theme === "dark" ? (
-        <Sun className="h-5 w-5 text-slate-200" />
+        <Sun className="h-4 w-4 text-slate-200" />
       ) : (
-        <Moon className="h-5 w-5 text-slate-800" />
+        <Moon className="h-4 w-4 text-slate-700" />
       )}
     </button>
   );
