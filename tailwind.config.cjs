@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['"Alfa Slab One"', 'serif'],
-        sub: ['"Creepster"', 'cursive'],
+        heading: ['"Playfair Display"', 'serif'],
+        sub: ['"Inter"', 'sans-serif'],
       },
       colors: {
         brand: {
