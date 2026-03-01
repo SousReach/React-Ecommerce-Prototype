@@ -43,7 +43,7 @@
     colors: ["#EB4C4C", "#FFA6A6"],
     sizes: ["One Size"],
     images: ["/placeholders/cap.svg"],
-    description: "Minimal cap with adjustable strap. Lightweight and durable.",
+    description: "",
     featured: false,
     isNew: false,
   },
