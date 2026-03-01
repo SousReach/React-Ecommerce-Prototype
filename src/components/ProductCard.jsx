@@ -23,12 +23,7 @@ function IconBtn({ onClick, title, children, ariaLabel }) {
       onClick={onClick}
       title={title}
       aria-label={ariaLabel || title}
-      className="
-        h-10 w-10 rounded-xl inline-flex items-center justify-center transition
-        bg-white/90 border border-slate-200 hover:bg-white
-        dark:bg-slate-950/60 dark:border-slate-700 dark:hover:bg-slate-900/70
-        dark:backdrop-blur
-      "
+      className="glass-icon-btn"
     >
       {children}
     </button>

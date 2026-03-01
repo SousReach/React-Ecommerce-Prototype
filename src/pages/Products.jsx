@@ -216,7 +216,7 @@ export default function Products() {
             className="absolute inset-0 bg-black/40"
             onClick={() => setMobileFiltersOpen(false)}
           />
-          <div className="absolute right-0 top-0 h-full w-full max-w-sm bg-white dark:bg-slate-900 shadow-soft p-5 overflow-auto">
+          <div className="glass-mobile-drawer">
             <FiltersPanel compact />
           </div>
         </div>
@@ -268,16 +268,16 @@ export default function Products() {
                 <button
                   key={c.key}
                   onClick={() => removeChip(c.key)}
-                  className="badge bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
+                  className="glass-chip"
                   title="Click to remove"
                 >
-                  {c.label} <span className="ml-2 text-slate-500">✕</span>
+                  {c.label} <span className="ml-2 opacity-60">✕</span>
                 </button>
               ))}
 
               <button
                 onClick={resetFilters}
-                className="badge bg-brand-50 text-brand-900 border border-brand-300 hover:bg-white"
+                className="glass-chip-clear"
               >
                 Clear all
               </button>

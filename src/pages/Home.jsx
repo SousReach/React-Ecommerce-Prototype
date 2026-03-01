@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero now matches dark mode */}
-      <section className="bg-gradient-to-b from-brand-50 to-white dark:from-slate-950 dark:to-slate-950">
+      <section>
         <div className="container-pad py-12">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== iOS 26 Liquid Glass — Global Design System ===== */
+
 @layer base {
   :root {
     color-scheme: light;
@@ -11,89 +13,250 @@
     color-scheme: dark;
   }
 
+  /* ── Light-mode animated mesh gradient body ── */
   body {
-    @apply bg-brand-50 text-slate-900 antialiased font-sub;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #1e293b;
+
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255, 200, 150, 0.55), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(255, 160, 180, 0.4), transparent 50%),
+      radial-gradient(ellipse 60% 50% at 50% 90%, rgba(200, 180, 255, 0.35), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 70% 60%, rgba(160, 220, 255, 0.3), transparent 50%),
+      linear-gradient(135deg, #FFF5E6 0%, #FFF0F0 40%, #F0F0FF 80%, #FFEDC7 100%);
+    background-size: 200% 200%;
+    animation: meshShift 25s ease-in-out infinite alternate;
+    min-height: 100dvh;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  h1, h2, h3, h4 {
     font-family: "Playfair Display", serif;
   }
 
-  /* Dark background with warm red/orange tones */
+  /* ── Dark-mode animated mesh gradient body ── */
   html.dark body {
     background:
-      radial-gradient(1200px circle at 18% 10%, rgba(195, 17, 12, 0.22), transparent 55%),
-      radial-gradient(900px circle at 78% 18%, rgba(230, 80, 27, 0.15), transparent 55%),
-      radial-gradient(900px circle at 50% 85%, rgba(116, 10, 3, 0.12), transparent 60%),
-      #280905;
-    color: rgb(241, 245, 249);
-    /* slate-100 */
+      radial-gradient(ellipse 80% 60% at 18% 10%, rgba(195, 17, 12, 0.25), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 78% 18%, rgba(230, 80, 27, 0.18), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 50% 85%, rgba(116, 10, 3, 0.14), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 30% 55%, rgba(80, 40, 120, 0.12), transparent 50%),
+      linear-gradient(160deg, #1a0a08 0%, #280905 50%, #1a0a14 100%);
+    background-size: 200% 200%;
+    animation: meshShift 25s ease-in-out infinite alternate;
+    color: #f1f5f9;
   }
 
-  /* Make common hard-coded text colors readable in dark mode */
-  html.dark .text-slate-900 {
-    color: rgb(241, 245, 249) !important;
-  }
-
-  /* slate-100 */
-  html.dark .text-slate-800 {
-    color: rgb(226, 232, 240) !important;
-  }
-
-  /* slate-200 */
-  html.dark .text-slate-700 {
-    color: rgb(226, 232, 240) !important;
-  }
-
-  /* slate-200 */
-  html.dark .text-slate-600 {
-    color: rgb(148, 163, 184) !important;
-  }
-
-  /* slate-400 */
-  html.dark .text-slate-500 {
-    color: rgb(148, 163, 184) !important;
-  }
-
-  /* slate-400 */
+  html.dark .text-slate-900 { color: #f1f5f9 !important; }
+  html.dark .text-slate-800 { color: #e2e8f0 !important; }
+  html.dark .text-slate-700 { color: #e2e8f0 !important; }
+  html.dark .text-slate-600 { color: #94a3b8 !important; }
+  html.dark .text-slate-500 { color: #94a3b8 !important; }
 }
+
+@keyframes meshShift {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 50% 100%; }
+}
+
+/* ==============================================
+   Component Layer — Liquid Glass Primitives
+   ============================================== */
 
 @layer components {
   .container-pad {
     @apply mx-auto w-full max-w-6xl px-4;
   }
 
+  /* ── Glass Card ── */
   .card {
-    @apply bg-white rounded-xl shadow-soft border border-slate-100 dark:bg-slate-900 dark:border-slate-800;
+    position: relative;
+    background: rgba(255, 255, 255, 0.38);
+    backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.07),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.8),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+    transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Prismatic top-edge shimmer */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 10%,
+      rgba(255, 180, 180, 0.35) 25%,
+      rgba(255, 255, 255, 0.9) 45%,
+      rgba(180, 220, 255, 0.35) 65%,
+      rgba(255, 255, 255, 0.5) 80%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Top-half specular sweep */
+  .card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: 20px 20px 0 0;
+    z-index: 1;
+  }
+
+  .card:hover {
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+  }
+
+  /* ── Glass Buttons ── */
   .btn {
-    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium transition;
+    @apply inline-flex items-center justify-center font-medium;
+    position: relative;
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
   }
 
   .btn-primary {
-    @apply btn bg-brand-900 text-white hover:bg-brand-800;
+    background: rgba(235, 76, 76, 0.82);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    color: white;
+    border: 1px solid rgba(255, 130, 130, 0.4);
+    box-shadow:
+      0 4px 20px rgba(235, 76, 76, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.08);
+    @apply inline-flex items-center justify-center font-medium;
+    position: relative;
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary:hover {
+    background: rgba(235, 76, 76, 0.92);
+    transform: translateY(-1px);
+    box-shadow:
+      0 8px 28px rgba(235, 76, 76, 0.35),
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      inset 0 1px 1px rgba(255, 255, 255, 0.4),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
   }
 
   .btn-ghost {
-    @apply btn bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-800;
+    background: rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    color: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+      0 2px 8px rgba(0, 0, 0, 0.04);
+    @apply inline-flex items-center justify-center font-medium;
+    position: relative;
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.52);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.8),
+      inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+      0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn-ghost:active {
+    transform: translateY(0);
+  }
+
+  /* ── Glass Badge ── */
   .badge {
-    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.5),
+      0 1px 4px rgba(0, 0, 0, 0.04);
   }
 
+  /* ── Glass Input ── */
   .input {
-    @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-brand-300 placeholder:text-slate-500 placeholder:opacity-100 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100 dark:placeholder:text-slate-400;
+    width: 100%;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    color: #1e293b;
+    transition: all 0.3s ease;
+  }
+
+  .input::placeholder {
+    color: rgba(100, 116, 139, 0.7);
+  }
+
+  .input:focus {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(235, 76, 76, 0.3);
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.5),
+      0 0 0 3px rgba(235, 76, 76, 0.1);
   }
 }
 
-/* ===== iOS Liquid Glass System ===== */
+/* ==============================================
+   iOS Liquid Glass — Navbar System (existing)
+   ============================================== */
 
-/* Floating glass navbar wrapper */
 .liquid-glass-nav {
   position: fixed;
   top: 12px;
@@ -106,7 +269,6 @@
   overflow: hidden;
 }
 
-/* Core liquid glass panel */
 .liquid-glass {
   position: relative;
   background: rgba(255, 255, 255, 0.45);
@@ -114,22 +276,16 @@
   -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
   border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow:
-    /* Outer soft shadow */
     0 8px 32px rgba(0, 0, 0, 0.08),
     0 2px 8px rgba(0, 0, 0, 0.04),
-    /* Inner specular highlight — top */
     inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    /* Inner specular highlight — bottom edge */
     inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
 
-/* Prismatic shimmer along the top edge */
 .liquid-glass::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 1px;
   background: linear-gradient(
     90deg,
@@ -145,25 +301,17 @@
   z-index: 1;
 }
 
-/* Secondary subtle specular sweep */
 .liquid-glass::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
   pointer-events: none;
   border-radius: 22px 22px 0 0;
   z-index: 0;
 }
 
-/* Glass pill elements (search, buttons, toggles) */
 .liquid-glass-pill {
   position: relative;
   background: rgba(255, 255, 255, 0.35);
@@ -187,7 +335,6 @@
   transform: translateY(-1px);
 }
 
-/* Glass nav link styling */
 .liquid-nav-link {
   position: relative;
   padding: 6px 14px;
@@ -216,7 +363,6 @@
   font-weight: 600;
 }
 
-/* Glass search input override */
 .liquid-glass-search {
   background: rgba(255, 255, 255, 0.3) !important;
   backdrop-filter: blur(8px);
@@ -243,7 +389,6 @@
     0 0 0 3px rgba(235, 76, 76, 0.1);
 }
 
-/* Glass badge (cart/wishlist count) */
 .liquid-glass-badge {
   background: rgba(235, 76, 76, 0.85);
   backdrop-filter: blur(8px);
@@ -264,12 +409,294 @@
   border: 1.5px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Spacer so page content doesn't hide behind fixed navbar */
 .liquid-glass-spacer {
   height: 88px;
 }
 
-/* ===== Dark Mode Liquid Glass ===== */
+/* ==============================================
+   Glass Footer
+   ============================================== */
+
+.glass-footer {
+  position: relative;
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.glass-footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 180, 180, 0.3) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(180, 220, 255, 0.3) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==============================================
+   Glass Icon Button (Product card actions)
+   ============================================== */
+
+.glass-icon-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.glass-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px) scale(1.05);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.03),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================================
+   Glass Mobile Drawer
+   ============================================== */
+
+.glass-mobile-drawer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 24rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(50px) saturate(200%) brightness(1.05);
+  -webkit-backdrop-filter: blur(50px) saturate(200%) brightness(1.05);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    -8px 0 32px rgba(0, 0, 0, 0.08),
+    inset 1px 0 1px rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  overflow: auto;
+}
+
+/* ==============================================
+   Glass Sticky Bar (mobile product detail)
+   ============================================== */
+
+.glass-sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.glass-sticky-bar::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 180, 180, 0.3) 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(180, 220, 255, 0.3) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==============================================
+   Glass Filter Chip
+   ============================================== */
+
+.glass-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.glass-chip:hover {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.glass-chip-clear {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(235, 76, 76, 0.12);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(235, 76, 76, 0.25);
+  color: #EB4C4C;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.glass-chip-clear:hover {
+  background: rgba(235, 76, 76, 0.2);
+}
+
+/* ==============================================
+   DARK MODE — Full Glass System Overrides
+   ============================================== */
+
+/* ── Dark Card ── */
+html.dark .card {
+  background: rgba(15, 10, 8, 0.4);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.02);
+}
+
+html.dark .card::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.02) 10%,
+    rgba(255, 140, 140, 0.1) 25%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(140, 180, 255, 0.1) 65%,
+    rgba(255, 255, 255, 0.04) 80%,
+    transparent 100%
+  );
+}
+
+html.dark .card::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+}
+
+html.dark .card:hover {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.03);
+}
+
+/* ── Dark Buttons ── */
+html.dark .btn-primary {
+  background: rgba(235, 76, 76, 0.7);
+  border-color: rgba(255, 130, 130, 0.2);
+  box-shadow:
+    0 4px 20px rgba(235, 76, 76, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .btn-primary:hover {
+  background: rgba(235, 76, 76, 0.85);
+  box-shadow:
+    0 8px 28px rgba(235, 76, 76, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Dark Input ── */
+html.dark .input {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+html.dark .input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+html.dark .input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 166, 166, 0.2);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
+    0 0 0 3px rgba(255, 166, 166, 0.08);
+}
+
+/* ── Dark Badge ── */
+html.dark .badge {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
+    0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Dark Navbar ── */
 html.dark .liquid-glass {
   background: rgba(15, 10, 8, 0.45);
   border-color: rgba(255, 255, 255, 0.08);
@@ -294,11 +721,7 @@ html.dark .liquid-glass::before {
 }
 
 html.dark .liquid-glass::after {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
 }
 
 html.dark .liquid-glass-pill {
@@ -363,4 +786,105 @@ html.dark .liquid-glass-search:focus {
 html.dark .liquid-glass-badge {
   background: rgba(235, 76, 76, 0.75);
   border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Dark Footer ── */
+html.dark .glass-footer {
+  background: rgba(15, 10, 8, 0.4);
+  border-top-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+html.dark .glass-footer::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 140, 140, 0.1) 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(140, 180, 255, 0.1) 70%,
+    transparent 100%
+  );
+}
+
+/* ── Dark Icon Button ── */
+html.dark .glass-icon-btn {
+  background: rgba(15, 10, 8, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .glass-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 -0.5px 0.5px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Dark Mobile Drawer ── */
+html.dark .glass-mobile-drawer {
+  background: rgba(15, 10, 8, 0.55);
+  border-left-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    -8px 0 32px rgba(0, 0, 0, 0.3),
+    inset 1px 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* ── Dark Sticky Bar ── */
+html.dark .glass-sticky-bar {
+  background: rgba(15, 10, 8, 0.5);
+  border-top-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+html.dark .glass-sticky-bar::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 140, 140, 0.08) 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(140, 180, 255, 0.08) 70%,
+    transparent 100%
+  );
+}
+
+/* ── Dark Chips ── */
+html.dark .glass-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.04),
+    0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+html.dark .glass-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .glass-chip-clear {
+  background: rgba(235, 76, 76, 0.15);
+  border-color: rgba(235, 76, 76, 0.2);
+  color: #FFA6A6;
+}
+
+html.dark .glass-chip-clear:hover {
+  background: rgba(235, 76, 76, 0.25);
+}
+
+/* ==============================================
+   Disabled states
+   ============================================== */
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }

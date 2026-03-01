@@ -140,7 +140,7 @@ export default function ProductDetail() {
       </div>
 
       {/* ✅ Sticky Add-to-Cart bar (mobile only) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-t border-slate-100 dark:border-slate-800">
+      <div className="md:hidden glass-sticky-bar">
         <div className="container-pad py-3 flex items-center gap-3">
           <div className="flex-1 min-w-0">
             <div className="text-sm font-semibold text-slate-900 truncate">{product.name}</div>
