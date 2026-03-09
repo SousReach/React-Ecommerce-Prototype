@@ -117,6 +117,7 @@ export default function ProductDetail() {
                         }`}
                       style={{ backgroundColor: c }}
                       title={c}
+                      aria-label={`Select color ${c}`}
                     />
                   ))}
                 </div>

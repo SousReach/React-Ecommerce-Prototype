@@ -128,16 +128,6 @@
   }
 
   /* ── Glass Buttons ── */
-  .btn {
-    @apply inline-flex items-center justify-center font-medium;
-    position: relative;
-    border-radius: 14px;
-    padding: 10px 20px;
-    font-size: 0.875rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-  }
-
   .btn-primary {
     background: rgba(235, 76, 76, 0.82);
     backdrop-filter: blur(16px) saturate(160%);

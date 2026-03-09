@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { products, categories, sizes } from "../data/products";
@@ -25,21 +25,26 @@ function sortProducts(list, sortKey) {
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // URL params
-  const qParam = searchParams.get("q") ?? "";
-  const categoryParam = searchParams.get("category") ?? "All";
-  const sizeParam = searchParams.get("size") ?? "All";
-  const maxPriceParam = Number(searchParams.get("maxPrice") ?? 999);
-  const sortParam = searchParams.get("sort") ?? "relevance";
+  // Derive ALL filter state from URL params (single source of truth)
+  const q = searchParams.get("q") ?? "";
+  const category = searchParams.get("category") ?? "All";
+  const size = searchParams.get("size") ?? "All";
+  const maxPrice = Number(searchParams.get("maxPrice")) || 100;
+  const sort = searchParams.get("sort") ?? "relevance";
 
-  // local state
-  const [q, setQ] = useState(qParam);
-  const [category, setCategory] = useState(categoryParam);
-  const [size, setSize] = useState(sizeParam);
-  const [maxPrice, setMaxPrice] = useState(Number.isFinite(maxPriceParam) ? maxPriceParam : 100);
-  const [sort, setSort] = useState(sortParam);
+  const mobileFiltersOpen = searchParams.get("filters") === "open";
 
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const setMobileFiltersOpen = useCallback(
+    (open) => {
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        if (open) next.set("filters", "open");
+        else next.delete("filters");
+        return next;
+      });
+    },
+    [setSearchParams]
+  );
 
   const filteredAndSorted = useMemo(() => {
     const filtered = products.filter((p) => {
@@ -53,22 +58,32 @@ export default function Products() {
     return sortProducts(filtered, sort);
   }, [q, category, size, maxPrice, sort]);
 
-  function applyFilters() {
-    const next = new URLSearchParams();
-    if (q.trim()) next.set("q", q.trim());
-    if (category !== "All") next.set("category", category);
-    if (size !== "All") next.set("size", size);
-    if (maxPrice !== 100) next.set("maxPrice", String(maxPrice));
-    if (sort !== "relevance") next.set("sort", sort);
-    setSearchParams(next);
+  /** Build new URLSearchParams from given filters */
+  const buildParams = useCallback(
+    (overrides = {}) => {
+      const vals = {
+        q: overrides.q ?? q,
+        category: overrides.category ?? category,
+        size: overrides.size ?? size,
+        maxPrice: overrides.maxPrice ?? maxPrice,
+        sort: overrides.sort ?? sort,
+      };
+      const next = new URLSearchParams();
+      if (vals.q.trim()) next.set("q", vals.q.trim());
+      if (vals.category !== "All") next.set("category", vals.category);
+      if (vals.size !== "All") next.set("size", vals.size);
+      if (vals.maxPrice !== 100) next.set("maxPrice", String(vals.maxPrice));
+      if (vals.sort !== "relevance") next.set("sort", vals.sort);
+      return next;
+    },
+    [q, category, size, maxPrice, sort]
+  );
+
+  function applyFilters(overrides = {}) {
+    setSearchParams(buildParams(overrides));
   }
 
   function resetFilters() {
-    setQ("");
-    setCategory("All");
-    setSize("All");
-    setMaxPrice(100);
-    setSort("relevance");
     setSearchParams(new URLSearchParams());
   }
 
@@ -90,16 +105,8 @@ export default function Products() {
   }, [q, category, size, maxPrice, sort]);
 
   function removeChip(key) {
-    const updates = {
-      q: () => setQ(""),
-      category: () => setCategory("All"),
-      size: () => setSize("All"),
-      maxPrice: () => setMaxPrice(100),
-      sort: () => setSort("relevance"),
-    };
-    updates[key]?.();
-    // Sync URL on next tick after state updates
-    setTimeout(() => applyFilters(), 0);
+    const defaults = { q: "", category: "All", size: "All", maxPrice: 100, sort: "relevance" };
+    applyFilters({ [key]: defaults[key] });
   }
 
   function FiltersPanel({ compact = false }) {
@@ -122,22 +129,27 @@ export default function Products() {
           <label className="text-sm font-semibold text-slate-700">Search</label>
           <input
             className="input mt-2"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
+            defaultValue={q}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                applyFilters();
+                applyFilters({ q: e.target.value });
                 setMobileFiltersOpen(false);
               }
             }}
             placeholder="e.g. hoodie"
+            id="filter-search"
           />
         </div>
 
         <div className="mt-4">
           <label className="text-sm font-semibold text-slate-700">Category</label>
-          <select className="input mt-2" value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            className="input mt-2"
+            value={category}
+            onChange={(e) => applyFilters({ category: e.target.value })}
+            id="filter-category"
+          >
             {categories.map((c) => (
               <option key={c} value={c}>{c}</option>
             ))}
@@ -146,7 +158,12 @@ export default function Products() {
 
         <div className="mt-4">
           <label className="text-sm font-semibold text-slate-700">Size</label>
-          <select className="input mt-2" value={size} onChange={(e) => setSize(e.target.value)}>
+          <select
+            className="input mt-2"
+            value={size}
+            onChange={(e) => applyFilters({ size: e.target.value })}
+            id="filter-size"
+          >
             {sizes.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -164,14 +181,21 @@ export default function Products() {
             max="100"
             aria-label="Maximum price"
             step="1"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            defaultValue={maxPrice}
+            onMouseUp={(e) => applyFilters({ maxPrice: Number(e.target.value) })}
+            onTouchEnd={(e) => applyFilters({ maxPrice: Number(e.target.value) })}
+            id="filter-max-price"
           />
         </div>
 
         <div className="mt-4">
           <label className="text-sm font-semibold text-slate-700">Sort</label>
-          <select className="input mt-2" value={sort} onChange={(e) => setSort(e.target.value)}>
+          <select
+            className="input mt-2"
+            value={sort}
+            onChange={(e) => applyFilters({ sort: e.target.value })}
+            id="filter-sort"
+          >
             <option value="relevance">Relevance</option>
             <option value="price_asc">Price: Low → High</option>
             <option value="price_desc">Price: High → Low</option>
@@ -180,15 +204,6 @@ export default function Products() {
         </div>
 
         <div className="mt-5 flex gap-3">
-          <button
-            className="btn-primary flex-1"
-            onClick={() => {
-              applyFilters();
-              setMobileFiltersOpen(false);
-            }}
-          >
-            Apply
-          </button>
           <button
             className="btn-ghost"
             onClick={() => {
@@ -242,6 +257,7 @@ export default function Products() {
               <button
                 className="btn-ghost lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
+                id="mobile-filters-btn"
               >
                 <SlidersHorizontal className="h-5 w-5 mr-2" />
                 Filters
@@ -250,13 +266,17 @@ export default function Products() {
               {/* Desktop quick sort box */}
               <div className="hidden lg:flex card p-3 items-center gap-3">
                 <label className="text-sm font-semibold text-slate-700">Sort</label>
-                <select className="input w-56" value={sort} onChange={(e) => setSort(e.target.value)}>
+                <select
+                  className="input w-56"
+                  value={sort}
+                  onChange={(e) => applyFilters({ sort: e.target.value })}
+                  id="desktop-sort"
+                >
                   <option value="relevance">Relevance</option>
                   <option value="price_asc">Price: Low → High</option>
                   <option value="price_desc">Price: High → Low</option>
                   <option value="name_asc">Name: A → Z</option>
                 </select>
-                <button className="btn-ghost" onClick={applyFilters}>Apply</button>
               </div>
             </div>
           </div>
